@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head th:replace="element::bootstrap-top"></head>
+
+<body ng-app="MiniApp">
+
+<div class="container-fluid" ng-controller="allOrderCtrl">
+    <div class="row">
+        <div class="col-md">
+            <span class="h3">Доставки за все время</span>
+        </div>
+    </div>
+    <a type="button" class="btn btn-md btn-primary shadow-sm mt-2" href="/api/order-page"><i class="bi bi-arrow-left mr-2"></i>Назад</a>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <span class="h5">Управление</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <span>something</span>
+        </div>
+    </div>
+    <div class="mt-3 alert alert-info" ng-show="!orders.length">
+        <span>Заказов не найдено!</span>
+    </div>
+    <div ng-show="orders.length">
+        <div class="mt-3">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th>Номер</th>
+                    <th>Имя клиента</th>
+                    <th>Телефон</th>
+                    <th>Адрес</th>
+                    <th>Дата доставки</th>
+                    <th>Количество, кг.</th>
+                    <th>Цена, руб.</th>
+                    <th>Итог, руб.</th>
+                    <th>Комментарий</th>
+                    <th>Доставлено</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="order in orders">
+                    <td ng-bind="order.id"></td>
+                    <td ng-bind="order.clientName"></td>
+                    <td ng-bind="order.phoneNumber"></td>
+                    <td ng-bind="order.address"></td>
+                    <td ng-bind="order.deliveryDate | date:'yyyy MMM dd HH:mm'"></td>
+                    <td ng-bind="order.amount"></td>
+                    <td ng-bind="order.costPerKg"></td>
+                    <td ng-bind="order.cost"></td>
+                    <td ng-bind="order.comment"></td>
+                    <td class="text-center">
+                        <div ng-show="order.delivered">
+                            <div class="badge badge-success">
+                                <span>Да</span>
+                            </div>
+                        </div>
+                        <div ng-show="!order.delivered">
+                            <div class="badge badge-danger">
+                                <span>Нет</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="element::angular-js"></div>
+<div th:replace="element::bootstrap-icons"></div>
+
+<script src="/static/js/all-order-page.js" th:src="@{/js/all-order-page.js}"></script>
+</body>
+</html>

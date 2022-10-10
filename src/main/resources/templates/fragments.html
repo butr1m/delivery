@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<th:block th:fragment="add-edit-order-fragment">
+    <div class="modal fade" id="add-edit-order" tabindex="-1" aria-hidden="true" data-backdrop="static"
+         data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h3">Заказ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" ng-form="order">
+                    <div class="row">
+                        <div class="col">
+                            <label for="client_name" class="h4">Имя клиента: </label>
+                            <input id="client_name" type="text" class="form-control" ng-required="true" autocomplete="off" ng-class="{'is-invalid': !_order.clientName }" ng-model="_order.clientName" placeholder="Ф.И.О.">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label for="phone_number" class="h4">Номер телефона: </label>
+                            <input id="phone_number" name="orderPhoneNumber" type="text" class="form-control" ng-required="true" autocomplete="off" ng-class="{'is-invalid': !_order.phoneNumber }" ng-model="_order.phoneNumber" ng-pattern="phoneNumberPattern" placeholder="+375-ХХ-ХХХХХХХ">
+                            <span class="ui-state-error text-danger mt-1" ng-show="order.orderPhoneNumber.$error.pattern">Пожалуйста, используйте шаблон +375-ХХ-ХХХХХХХ</span>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label for="address" class="h4">Адрес: </label>
+                            <input id="address" type="text" class="form-control" ng-required="true" ng-class="{'is-invalid': !_order.address }" autocomplete="off" ng-model="_order.address" placeholder="Минск пр-т Любимова 34к1">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label for="delivery_date" class="h4">Дата и время доставки: </label>
+                            <input id="delivery_date" type="datetime-local" class="form-control" ng-required="true" ng-class="{'is-invalid': !_order.deliveryDate}" ng-model="_order.deliveryDate" >
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label for="amount" class="h4">Количество кг: </label>
+                            <div class="input-group">
+                                <input id="amount" type="number" class="form-control" ng-required="true" autocomplete="off" ng-class="{'is-invalid': !_order.amount}" ng-model="_order.amount" placeholder="100">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">кг</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label for="perKg" class="h4">Стоимость за кг: </label>
+                            <div class="input-group">
+                                <input id="perKg" type="number" class="form-control" ng-required="true" autocomplete="off" ng-class="{'is-invalid': !_order.costPerKg}" ng-model="_order.costPerKg" placeholder="1.50">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">рублей</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label for="cost" class="h4">Стоимость: </label>
+                            <div class="input-group">
+                                <input id="cost" type="text" class="form-control" ng-required="true" autocomplete="off" ng-model="_order.cost" placeholder="125.50" disabled>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary shadow-sm" type="button" title="Рассчитать" ng-disabled="!_order.amount || !_order.costPerKg" ng-click="calculateCost(_order.amount, _order.costPerKg)"><i class="bi bi-calculator"></i></button>
+                                    <span class="input-group-text">рублей</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label for="comment" class="h4">Комментарий: </label>
+                            <textarea id="comment" rows="3" type="text" class="form-control" autocomplete="off" ng-model="_order.comment" placeholder="Дополнительная информация"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary shadow-sm" ng-click="onResetOrderFields()">Сбросить</button>
+                    <button type="button" class="btn btn-primary shadow-sm" ng-disabled="order.$invalid" ng-click="onSaveOrder()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>

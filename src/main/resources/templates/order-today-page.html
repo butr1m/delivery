@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head th:replace="element::bootstrap-top"></head>
+
+<body ng-app="MiniApp">
+
+<div class="container-fluid" ng-controller="todayCtrl">
+    <div class="h3">
+        <span>Текущие заказы</span>
+    </div>
+    <div>
+        <a type="button" class="btn btn-md btn-primary shadow-sm mt-2" href="/api/order-page"><i class="bi bi-arrow-left mr-2"></i>Назад</a>
+    </div>
+    <div>
+        <a type="button" class="btn btn-md btn-primary shadow-sm mt-2" ng-click="onShowEditOrderModal()">Заказ<i class="ml-2 bi bi-plus-square"></i></a>
+    </div>
+    <div class="mt-3 alert alert-info" ng-show="!orders.length">
+        <span>На сегодня доставок нет!</span>
+    </div>
+    <hr>
+    <div ng-show="orders.length">
+        <div class="row">
+            <div class="col-md">
+                <span class="h3">Информация о заказах</span>
+            </div>
+        </div>
+        <div class="row font-weight-bold mt-1">
+            <div class="col-md-1">
+                <span>Количество:</span>
+                <span ng-bind="orders.length"></span>
+            </div>
+            <div class="col-md-1">
+                <span>Вес:</span>
+                <span ng-bind="ordersInfo.weight"></span>
+                <span>кг.</span>
+            </div>
+            <div class="col-md-1">
+                <span>Сумма:</span>
+                <span ng-bind="ordersInfo.cost"></span>
+                <span>руб.</span>
+            </div>
+            <div class="col-md-1 text-success">
+                <span>Доставлено:</span>
+                <span ng-bind="ordersInfo.delivered"></span>
+            </div>
+            <div class="col-md-1 text-warning">
+                <span >Осталось:</span>
+                <span ng-bind="ordersInfo.left"></span>
+            </div>
+        </div>
+        <hr>
+        <label class="h3">Заказы</label>
+        <div class="row mt-1 h5">
+            <div class="col-md-1">
+                <span>Номер</span>
+            </div>
+            <div class="col-md-1">
+                <span>Имя клиента</span>
+            </div>
+            <div class="col-md-1">
+                <span>Телефон</span>
+            </div>
+            <div class="col-md-2">
+                <span>Адрес</span>
+            </div>
+            <div class="col-md-1">
+                <span>Дата доставки</span>
+            </div>
+            <div class="col-md-1">
+                <span>Количество</span>
+            </div>
+            <div class="col-md-1">
+                <span>Цена</span>
+            </div>
+            <div class="col-md-1">
+                <span>Итог</span>
+            </div>
+            <div class="col-md-1">
+                <span>Доставка</span>
+            </div>
+            <div class="col-md-2">
+                <span>Комментарий</span>
+            </div>
+        </div>
+        <div class="row mt-2 font-weight-bold font-italic" ng-repeat="order in orders">
+            <div class="col-md-1">
+                <span class="text-primary" ng-bind="order.id"></span>
+            </div>
+            <div class="col-md-1">
+                <span ng-bind="order.clientName"></span>
+            </div>
+            <div class="col-md-1">
+                <span ng-bind="order.phoneNumber"></span>
+            </div>
+            <div class="col-md-2">
+                <span ng-bind="order.address"></span>
+            </div>
+            <div class="col-md-1">
+                <span ng-bind="order.deliveryDate | date:'dd MMM HH:mm'"></span>
+            </div>
+            <div class="col-md-1">
+                <span ng-bind="order.amount"></span>
+                <span>кг.</span>
+            </div>
+            <div class="col-md-1">
+                <span ng-bind="order.costPerKg"></span>
+                <span>руб.</span>
+            </div>
+            <div class="col-md-1">
+                <span ng-bind="order.cost"></span>
+                <span>руб.</span>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-sm shadow-sm" ng-class="order.delivered ? 'btn-success' : 'btn-warning'" ng-click="onChangeDeliveryStatus(order)" title="Доставить"><i class="bi bi-truck"></i></button>
+                <button type="button" class="btn btn-sm shadow-sm btn-primary" title="Редактировать" ng-click="onShowEditOrderModal(order)"><i class="bi bi-pencil"></i></button>
+                <button type="button" class="btn btn-sm shadow-sm btn-danger" title="Отменить" ng-click="onShowDeleteModal(order.id)"><i class="bi bi-x-octagon"></i></button>
+            </div>
+            <div class="col-md-2">
+                <span ng-bind="order.comment"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete-order" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h4">Отмена заказа</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-auto">
+                            <span> Вы уверены, что хотите отменить заказ номер <span class="text-primary font-weight-bold">{{deleteOrderId}}</span>?</span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md">
+                            <div class="text-right">
+                                <button type="button" class="btn btn-sm shadow-sm btn-success" ng-click="onDeleteOrder()">Да</button>
+                                <button type="button" class="btn btn-sm shadow-sm btn-danger" data-dismiss="modal">Нет</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments::add-edit-order-fragment"></div>
+</div>
+
+<div th:replace="element::angular-js"></div>
+<div th:replace="element::bootstrap-icons"></div>
+
+<script src="/static/js/order-today-page.js" th:src="@{/js/order-today-page.js}"></script>
+</body>
+</html>

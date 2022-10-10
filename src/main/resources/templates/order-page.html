@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head th:replace="element::bootstrap-top">
+</head>
+
+<body ng-app="MiniApp">
+
+<div class="container-fluid" ng-controller="orderController">
+    <div class="row h1 justify-content-md-center mt-5">
+        <div class="col-md-4 text-center">Delivery API</div>
+    </div>
+
+    <div class="row mt-5 justify-content-md-center">
+        <div class="col-md-4 text-center">
+            <button type="button" class="btn btn-lg btn-primary shadow-sm" ng-click="openOrderModal()">Создать заказ<i class="ml-2 bi bi-plus-square"></i></button>
+        </div>
+    </div>
+    <div class="row mt-5 justify-content-md-center">
+        <div class="col-md-4 text-center">
+            <a type="button" class="btn btn-lg btn-primary shadow-sm" href="/api/order-on-today" >Заказы на сегодня<i class="ml-2 bi bi-truck"></i></a>
+        </div>
+    </div>
+    <div class="row mt-5 justify-content-md-center">
+        <div class="col-md-4 text-center">
+            <a type="button" class="btn btn-lg btn-primary shadow-sm" href="/api/all-orders" >Заказы за все время<i class="ml-2 bi bi-journal-check"></i></a>
+        </div>
+    </div>
+    <div class="row mt-5 justify-content-md-center">
+        <div class="col-md-4 text-center">
+            <a type="button" class="btn btn-lg btn-primary shadow-sm" href="/api/all-orders" >Клиенты<i class="ml-2 bi bi-people"></i></a>
+        </div>
+    </div>
+    <div th:replace="fragments::add-edit-order-fragment"></div>
+</div>
+
+<div th:replace="element::angular-js"></div>
+<div th:replace="element::bootstrap-icons"></div>
+
+<script src="/static/js/order-page.js" th:src="@{/js/order-page.js}"></script>
+</body>
+</html>

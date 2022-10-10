@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-order-table
+      author: butr1m
+      changes:
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: client_name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: delivery_date
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cost_per_kg
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cost
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: varchar(2048)
+              - column:
+                  name: delivered
+                  type: boolean
