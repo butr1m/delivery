@@ -1,8 +1,10 @@
 package com.butr1m.delivery.service.impl;
 
 import com.butr1m.delivery.converter.OrderConverter;
+import com.butr1m.delivery.entity.Client;
 import com.butr1m.delivery.entity.Order;
 import com.butr1m.delivery.repository.OrderRepository;
+import com.butr1m.delivery.service.ClientService;
 import com.butr1m.delivery.service.OrderService;
 import com.butr1m.delivery.view.OrderView;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderConverter orderConverter;
+    private final ClientService clientService;
 
     @Override
     public List<OrderView> findAllOrder() {
@@ -30,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderView saveNewOrder(OrderView orderView) {
         Order order = orderConverter.viewToEntity(orderView);
+        clientService.saveClient(createClient(orderView));
         return orderConverter.entityToView(orderRepository.save(order));
     }
 
@@ -62,5 +66,14 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(view.getId()).orElse(null);
         order.setDelivered(view.getDelivered());
         return orderConverter.entityToView(orderRepository.save(order));
+    }
+
+    private Client createClient(OrderView orderView) {
+        return Client.builder()
+                .id(null)
+                .name(orderView.getClientName())
+                .phoneNumber(orderView.getPhoneNumber())
+                .address(orderView.getAddress())
+                .build();
     }
 }

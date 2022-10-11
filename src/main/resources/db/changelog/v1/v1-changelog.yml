@@ -2,4 +2,6 @@ databaseChangeLog:
   - include:
       file: classpath:/db/changelog/v1/create/2022-09-10-create-order-table.yml
   - include:
+      file: classpath:/db/changelog/v1/create/2022-10-11-create-client-table.yml
+  - include:
       file: classpath:/db/changelog/v1/insert/insert-data.sql

@@ -25,7 +25,7 @@
                         <div class="col">
                             <label for="phone_number" class="h4">Номер телефона: </label>
                             <input id="phone_number" name="orderPhoneNumber" type="text" class="form-control" ng-required="true" autocomplete="off" ng-class="{'is-invalid': !_order.phoneNumber }" ng-model="_order.phoneNumber" ng-pattern="phoneNumberPattern" placeholder="+375-ХХ-ХХХХХХХ">
-                            <span class="ui-state-error text-danger mt-1" ng-show="order.orderPhoneNumber.$error.pattern">Пожалуйста, используйте шаблон +375-ХХ-ХХХХХХХ</span>
+                            <span class="ui-state-error text-danger" ng-show="order.orderPhoneNumber.$error.pattern">Пожалуйста, используйте шаблон +375-ХХ-ХХХХХХХ</span>
                         </div>
                     </div>
                     <div class="row mt-3">

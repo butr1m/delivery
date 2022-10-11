@@ -8,31 +8,54 @@
 <body ng-app="MiniApp">
 
 <div class="container-fluid" ng-controller="orderController">
-    <div class="row h1 justify-content-md-center mt-5">
-        <div class="col-md-4 text-center">Delivery API</div>
+    <div class="row justify-content-md-center mt-5">
+        <div class="col-md-4 h1 text-center">Delivery API</div>
     </div>
-
-    <div class="row mt-5 justify-content-md-center">
-        <div class="col-md-4 text-center">
-            <button type="button" class="btn btn-lg btn-primary shadow-sm" ng-click="openOrderModal()">Создать заказ<i class="ml-2 bi bi-plus-square"></i></button>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <span class="h3">Управление заказами</span>
+                </div>
+            </div>
+            <div class="row mt-5 justify-content-md-center">
+                <div class="col-md-4 text-center">
+                    <button type="button" class="btn btn-lg btn-primary shadow-sm" ng-click="openOrderModal()">Создать заказ<i class="ml-2 bi bi-plus-square"></i></button>
+                </div>
+            </div>
+            <div class="row mt-5 justify-content-md-center">
+                <div class="col-md-4 text-center">
+                    <a type="button" class="btn btn-lg btn-primary shadow-sm" href="/api/order-on-today">Заказы на сегодня<i class="ml-2 bi bi-truck"></i></a>
+                </div>
+            </div>
+            <div class="row mt-5 justify-content-md-center">
+                <div class="col-md-4 text-center">
+                    <a type="button" class="btn btn-lg btn-primary shadow-sm" href="/api/all-orders">Заказы за все время<i class="ml-2 bi bi-journal-check"></i></a>
+                </div>
+            </div>
+            <div class="row mt-5 justify-content-md-center">
+                <div class="col-md-4 text-center">
+                    <a type="button" class="btn btn-lg btn-primary shadow-sm" href="/api/client-page">Клиенты<i class="ml-2 bi bi-people"></i></a>
+                </div>
+            </div>
+            <div th:replace="fragments::add-edit-order-fragment"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <span class="h3">Заметки</span>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="mt-5 alert alert-secondary">
+                        <span class="h5 font-weight-bold font-italic">Добавь хоть что нибудь</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row mt-5 justify-content-md-center">
-        <div class="col-md-4 text-center">
-            <a type="button" class="btn btn-lg btn-primary shadow-sm" href="/api/order-on-today" >Заказы на сегодня<i class="ml-2 bi bi-truck"></i></a>
-        </div>
-    </div>
-    <div class="row mt-5 justify-content-md-center">
-        <div class="col-md-4 text-center">
-            <a type="button" class="btn btn-lg btn-primary shadow-sm" href="/api/all-orders" >Заказы за все время<i class="ml-2 bi bi-journal-check"></i></a>
-        </div>
-    </div>
-    <div class="row mt-5 justify-content-md-center">
-        <div class="col-md-4 text-center">
-            <a type="button" class="btn btn-lg btn-primary shadow-sm" href="/api/all-orders" >Клиенты<i class="ml-2 bi bi-people"></i></a>
-        </div>
-    </div>
-    <div th:replace="fragments::add-edit-order-fragment"></div>
+</div>
 </div>
 
 <div th:replace="element::angular-js"></div>

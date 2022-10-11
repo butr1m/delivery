@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-client-table
+      author: butr1m
+      changes:
+        - createTable:
+            tableName: clients
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
